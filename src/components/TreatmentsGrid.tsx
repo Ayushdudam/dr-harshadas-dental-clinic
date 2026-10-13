@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { TREATMENTS } from '../data/clinicData';
+import { TREATMENTS, CLINIC_INFO } from '../data/clinicData';
 import { ShieldCheck, Sparkles, Smile, Target, Sparkle, CheckCircle, ArrowRight, Clock, Check, MessageCircle, Calendar } from 'lucide-react';
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -14,9 +14,9 @@ const iconMap: Record<string, React.ReactNode> = {
 
 export const TreatmentsGrid: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const [activeTreatmentId, setActiveTreatmentId] = useState<string>('rct');
+  const [activeTreatmentId, setActiveTreatmentId] = useState<string>(TREATMENTS[0]?.id || 'whitening');
 
-  const categories = ['All', 'Endodontics', 'Cosmetic', 'Restorative', 'Orthodontics', 'Preventive'];
+  const categories = ['All', ...Array.from(new Set(TREATMENTS.map(t => t.category)))];
 
   const filteredTreatments = selectedCategory === 'All'
     ? TREATMENTS
